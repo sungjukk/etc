@@ -98,4 +98,11 @@ function connect() {
 		alert(msg); // 서버에서 연결이 끊어진 경우 실행되는 함수
 	});
 }
+
+function send() {
+	stompClient.send("/app/roomChat", {}, JSON.stringify({ //send('서버로 보내는 주소', 데이터(json))
+		'id' : 'name',
+		'message' : 'welcome'
+	}));
+}
 ```
