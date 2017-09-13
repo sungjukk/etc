@@ -1,5 +1,5 @@
-### ionic Push
-#### Android FCM 사용 방법
+## ionic Push
+### Android FCM 사용 방법
 1.  [firebase](https://console.firebase.google.com/)에서 프로젝트 생성
 
 
