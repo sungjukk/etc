@@ -6,10 +6,10 @@
 * `postMessage()`를 이용
 * data를 보낼 자식 창??
 ```javascript
-  var obj = {
-			cameraEvent : event
-	}
-	window.parent.postMessage(obj,'*');
+var obj = {
+   cameraEvent : event
+}
+window.parent.postMessage(obj,'*');
 ```
 
 * data를 받을 부모 창
