@@ -4,7 +4,8 @@
 * iframe 속성에서 ` allowfullscreen="true"`,`mozallowfullscreen="true"`,`webkitallowfullscreen="true"` 속성을 추가 시켜준다.
 ### iframe 안에서 부모창으로 데이터 전송
 * `postMessage()`를 이용
-* `postMessage(데이터,도메인)` 형식 데이터는 `json`도 지원
+* `postMessage(데이터,도메인)` 형식 
+* 데이터는 `json`도 지원
 * data를 보낼 자식 창??
 ```javascript
 var obj = {
