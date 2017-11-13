@@ -1,4 +1,4 @@
-##ios ipa 파일 설치 링크 만들기
+## ios ipa 파일 설치 링크 만들기
 ### 준비물
 * dropbox 계정
 * provisioning 파일
