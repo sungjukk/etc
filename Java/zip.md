@@ -7,12 +7,10 @@
 ### jazzlib
 * 한글 파일도 압축 할 때 필요함
 * 한글 파일이 깨지는 경우에는 리눅스 환경 설정 의심해봐야함(정확하게는 좀 더 알아봐야함)
-* 리눅스
-```
-locale
-```
+* 리눅스 명령어 `locale`로 확인해봐야함
 
 ```java
+private static final int BUFFER_SIZE = 64*1024;
 public static String setZip(List files) throws Exception {
         // 압축할 폴더를 설정한다.
         String targetDir = "C://zip/";
@@ -119,4 +117,93 @@ public static String setZip(List files) throws Exception {
         return zfileNm;
     }
 ```
-### 
+### apache.commons.compress
+* jazzlib에서 한글 파일 깨질때 안깨졌음
+* encodingType을 설정할 수 있다(jazzlib 안됨)
+
+```java
+private static final int BUFFER_SIZE = 64*1024;
+public static String setZip(List files) throws Exception {
+        // 압축할 폴더를 설정한다.
+        String targetDir = "C://zip/";
+        File zfileDir = new File(targetDir);
+        zfileDir.mkdirs();
+        // 현재 시간을 설정한다.
+        long beginTime = System.currentTimeMillis();
+        int cnt;
+        byte[] buffer = new byte[BUFFER_SIZE];
+        FileInputStream finput = null;
+        FileOutputStream foutput;
+        ZipArchiveOutputStream zos = null;
+        /*
+         ********************************************
+         * 압축할 폴더명을 얻는다. : 절대 경로가 넘어올 경우 --> 상대경로로 변경한다...
+         *********************************************/
+        targetDir.replace('\\', File.separatorChar);
+        targetDir.replace('/', File.separatorChar);
+
+
+	 Map firstMap = (Map) files.get(0);
+        
+        String zfileNm = "test.zip";
+
+        System.out.println("Zip File Path and Name : " + zfileNm);
+
+        // Zip 파일을 만든다.
+        File zfile = new File(targetDir, zfileNm);
+        
+        // Zip 파일 객체를 출력 스트림에 넣는다.
+        foutput = new FileOutputStream(zfile);
+
+        // 집출력 스트림에 집파일을 넣는다.
+        //zoutput = new net.sf.jazzlib.ZipOutputStream((OutputStream)foutput);
+        zos = new ZipArchiveOutputStream(foutput);
+        net.sf.jazzlib.ZipEntry zentry = null;
+
+        try {
+    		Map tempMap = null;
+    		
+      	  	for (Integer i=0; i<files.size(); i++) {
+                // 압축할 파일 배열 중 하나를 꺼내서 입력 스트림에 넣는다.
+      	  		tempMap = (Map) files.get(i);
+      	        File targetFile = new File("C://test.png");
+                finput = new FileInputStream(targetFile);
+                String fileName = "test.png";
+		// 인코딩 설정
+                zos.setEncoding("UTF-8");
+                zos.putArchiveEntry(new ZipArchiveEntry(fileName));
+
+                cnt = 0;
+                while ((cnt = finput.read(buffer)) != -1) {
+                    //zoutput.write(buffer, 0, cnt);
+                	zos.write(buffer, 0, cnt);
+                }
+
+                finput.close();
+                zos.closeArchiveEntry();
+            }
+      	  	zos.close();
+            foutput.close();
+        } catch (Exception e) {
+            System.out.println("Compression Error : " + e.toString());
+            e.printStackTrace();
+            throw new Exception(e);
+        } finally {
+            if (finput != null) {
+                finput.close();
+            }
+            if (zos != null) {
+            	zos.close();
+            }
+            if (foutput != null) {
+                foutput.close();
+            }
+        }
+
+        long msec = System.currentTimeMillis() - beginTime;
+
+        System.out.println("Check :: >> " + msec/1000 + "." + (msec % 1000) + " sec. elapsed...");
+        
+        return zfileNm;
+    }
+```
