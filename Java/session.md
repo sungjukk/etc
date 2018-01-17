@@ -69,7 +69,7 @@ public void login(HttpServletRequest request, HttpServletResponse response, Mode
 
 * `logout.do` 로그아웃 매서드
 ```java
-public void login(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws Exception {
+public void logout(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) throws Exception {
   request.getSession.invalidate(); // SessionCheck.valueUnbound() 매서드 실행
 }
 ```
