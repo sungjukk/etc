@@ -26,6 +26,24 @@ END;
 
      ,no_parse   => TRUE); END;
 ```
+### interval 종류
+* SYSDATE+7 : 7일에 한번 씩 job 수행
+
+* SYSDATE+1/24 : 1시간에 한번 씩 job 수행
+
+* SYSDATE+30/ : 30초에 한번 씩 job 수행(24: 시간 당, 1440(24x60):분 당, 86400(24x60x60):초 당 )
+
+* TRUNC(SYSDATE, 'MI')+8/24 : 최초 job 수행시간이 12:29분 일 경우 매시 12:29분에 job 수행
+
+* TRUNC(SYSDATE+1) : 매일 밤 12시에 job 수행
+
+* TRUNC(SYSDATE+1)+3/24 : 매일 오전 3시 job 수행
+
+* NEXT_DAY(TRUNC(SYSDATE),'MONDAY')+15/25 : 매주 월요일 오후 3시 정각에 job 수행
+
+* TRUNC(LAST_DAY(SYSDATE))+1 : 매월 1일 밤 12시에 job 수행
+
+* TRUNC(LAST_DAY(SYSDATE))+1+8/24+30/1440 : 매월 1일 오전 8시 30분
 ### dbms 작업 조회
 ```
 SELECT * FROM USER_JOBS;
