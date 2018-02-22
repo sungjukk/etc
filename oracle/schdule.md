@@ -1,5 +1,5 @@
 ## oracle 스케줄러
-### 생성
+### scheduler 생성
 ```
 BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
@@ -14,6 +14,22 @@ BEGIN
             auto_drop => FALSE,
             comments => '');
 END;
+```
+### scheduler 조회
+```
+SELECT * FROM USER_SCHEDULER_JOBS;
+```
+### scheduler 로그 조회
+```
+SELECT * FROM USER_SCHEDULER_JOB_LOG;
+```
+### scheduler 상세 정보
+```
+SELECT * FROM USER_SCHEDULER_JOB_RUN_DETAILS;
+```
+### scheduler 삭제
+```
+BEGIN DBMS_SCHEDULER.DROP_JOB( JOB_NAME => 'SCH_PROC_MSG_STATE', FORCE => false); END ; 
 ```
 ### dbms 작업 생성
 ```
